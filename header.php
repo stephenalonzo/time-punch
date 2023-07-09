@@ -19,13 +19,6 @@ if (isset($_SESSION['id']) && $_SESSION['id'])
             </button>
         </div>
 
-        <div class="flex items-center gap-4">
-            <a href="#">
-                <span class="sr-only">Logo</span>
-                <span class="h-10 w-20 rounded-lg bg-gray-200"></span>
-            </a>
-        </div>
-
         <div class="flex w-0 flex-1 justify-end lg:hidden">
             <button class="rounded-full bg-gray-100 p-2 text-gray-500" type="button">
                 <span class="sr-only">Menu</span>
@@ -35,14 +28,14 @@ if (isset($_SESSION['id']) && $_SESSION['id'])
             </button>
         </div>
 
-        <nav aria-label="Global" class="hidden items-center justify-center gap-8 font-medium lg:flex lg:w-0 lg:flex-1">
+        <nav aria-label="Global" class="hidden items-center gap-8 font-medium lg:flex lg:w-0 lg:flex-1">
             <a class="text-gray-900" href="">Home</a>
             <a class="text-gray-900" href="">Timesheet</a>
             <a class="text-gray-900" href="">Time-Off Request</a>
         </nav>
 
         <div class="hidden items-center gap-4 lg:flex">
-            <span>Welcome back, <?php echo $_SESSION['first_name']; ?>!</span>
+            <span class="text-sm">Welcome back, <?php echo $_SESSION['first_name']; ?>!</span>
 
             <a href="./logout.php" class="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white">
                 Logout
