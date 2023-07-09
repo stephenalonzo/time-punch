@@ -17,5 +17,20 @@ require_once ('controller.php');
     <link rel="stylesheet" href="./dist/output.css">
 </head>
 
-<h1>Home</h1>
+<body>
+    <section class="px-4 py-6">
+        <div class="container mx-auto space-y-4">
+            <div class="flex flex-col items-center justify-center space-y-1">
+                <div id="time" class="font-semibold text-3xl"></div>
+                <div id="date"></div>
+            </div>
+            <div class="flex items-center justify-center space-x-4">
+                <button type="submit" name="time_in" class="px-4 py-2 rounded-md bg-green-700 text-white">In Day</button>
+                <button type="submit" name="time_in" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Lunch</button>
+                <button type="submit" name="time_in" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>
+            </div>
+        </div>
+    </section>
+    <script src="./src/startTime.js"></script>
+</body>
 </html>
