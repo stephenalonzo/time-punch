@@ -17,7 +17,7 @@ function getEmpStatus($params)
 
 }
 
-function appViews($params)
+function buttonGroup($params)
 {
 
     $params = filterParams($params);
@@ -31,7 +31,7 @@ function appViews($params)
 
             case 'OUT':
                 $params['buttonGroup'] = 
-                '<button type="submit" name="in_day" class="px-4 py-2 rounded-md bg-green-700 text-white">In Day</button>
+                '<button type="submit" name="in_day" class="px-4 py-2 rounded-md bg-green-500 text-white">In Day</button>
                 <button type="submit" name="out_break" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>
                 <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-blue-700 text-white">Out Lunch</button>';
             break;
@@ -57,11 +57,25 @@ function appViews($params)
                 <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-blue-700 text-white">Out Lunch</button>';
             break;
 
-            case 'LUNCH':
+            case 'OUT_LUNCH':
                 $params['buttonGroup'] = 
                 '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="out_break" class="px-4 py-2 rounded-md bg-green-500 text-white">Out Break</button>
-                <button type="submit" name="in_lunch" class="px-4 py-2 rounded-md bg-yellow-500 text-white">In Lunch</button>';
+                <button type="submit" name="out_break" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>
+                <button type="submit" name="in_lunch" class="px-4 py-2 rounded-md bg-green-500 text-white">In Lunch</button>';
+            break;
+
+            case 'IN_LUNCH':
+                $params['buttonGroup'] = 
+                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
+                <button type="submit" name="out_break" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>
+                <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-blue-700 text-white">Out Lunch</button>';
+            break;
+
+            case 'OUT':
+                $params['buttonGroup'] = 
+                '<button type="submit" name="in_day" class="px-4 py-2 rounded-md bg-green-500 text-white">In Day</button>
+                <button type="submit" name="out_break" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>
+                <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-blue-700 text-white">Out Lunch</button>';
             break;
 
         }

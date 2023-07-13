@@ -26,12 +26,9 @@ require_once ('controller.php');
             </div>
             <div class="flex items-center justify-center space-x-4">
                 <form action="" method="post">
-                    <!-- <button type="submit" name="in_day" class="px-4 py-2 rounded-md bg-green-700 text-white">In Day</button>
-                    <button type="submit" name="out_break" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>
-                    <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Lunch</button> -->
                     <?php 
                     
-                    $params = appViews($params);
+                    $params = buttonGroup($params);
 
                     echo $params['buttonGroup'];
                     

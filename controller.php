@@ -29,6 +29,22 @@ foreach ($_REQUEST as $key => $value)
             userPunch($params);
         break;
 
+        case 'out_lunch':
+            userPunch($params);
+        break;
+
+        case 'in_lunch':
+            userPunch($params);
+        break;
+
+        case 'out_day':
+            userPunch($params);
+        break;
+
+        case 'logout':
+            userLogout();
+        break;
+
     }
 
 }

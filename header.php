@@ -34,12 +34,17 @@ if (isset($_SESSION['id']) && $_SESSION['id'])
             <a class="text-gray-900" href="">Time-Off Request</a>
         </nav>
 
-        <div class="hidden items-center gap-4 lg:flex">
+        <div class="hidden items-center space-x-4 lg:flex">
             <span class="text-sm">Welcome back, <?php echo $_SESSION['first_name']; ?>!</span>
 
-            <a href="./logout.php" class="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white">
+            <!-- <a href="./logout.php" class="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white">
                 Logout
-            </a>
+            </a> -->
+            <form action="" method="post" class="m-0">
+                <button type="submit" name="logout" class="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white">
+                    Logout
+                </button>
+            </form>
         </div>
     </div>
 
