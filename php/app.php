@@ -118,4 +118,269 @@ function userLogin($params)
 
 }
 
+function userPunch($params)
+{
+
+	$params = filterParams($params);
+
+	foreach ($_REQUEST as $key => $value)
+	{
+
+		switch ($key)
+		{
+
+			case 'in_day':
+
+				// get user input for inDay
+				// insert data to db
+			
+				$params['dba']['i'] = "INSERT INTO user_punch (user_id, punch_day, time_in, punch_type) VALUES (:user_id, CURDATE(), NOW(), :punch_type)";
+				$params['bindParam'] = array(
+					':user_id' 		=> $_SESSION['id'],
+					':punch_type'	=> 'IN_DAY'
+				);
+			
+				if (dbAccess($params))
+				{
+			
+					$params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
+					$params['bindParam'] = array(
+						':emp_status' => 'IN',
+						':id'	=> $_SESSION['id']
+					);
+					
+					dbAccess($params);
+			
+				}
+
+			break;
+
+			case 'out_break':
+
+				// get user input for inDay
+				// insert data to db
+			
+				$params['dba']['i'] = "INSERT INTO user_punch (user_id, punch_day, time_out, punch_type) VALUES (:user_id, CURDATE(), NOW(), :punch_type)";
+				$params['bindParam'] = array(
+					':user_id' 		=> $_SESSION['id'],
+					':punch_type'	=> 'BREAK'
+				);
+			
+				if (dbAccess($params))
+				{
+			
+					$params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
+					$params['bindParam'] = array(
+						':emp_status' => 'OUT_BREAK',
+						':id'	=> $_SESSION['id']
+					);
+					
+					dbAccess($params);
+			
+				}
+
+			break;
+
+			case 'in_break':
+
+				// get user input for inDay
+				// insert data to db
+			
+				$params['dba']['u'] = "UPDATE user_punch SET time_in = NOW() WHERE user_id = :user_id AND punch_type = 'BREAK' AND punch_day = CURDATE() AND time_in = '00:00:00'";
+				$params['bindParam'] = array(
+					':user_id' 		=> $_SESSION['id']
+				);
+			
+				if (dbAccess($params))
+				{
+
+					$params['dba']['u'] = "UPDATE user_punch SET punch_type = :punch_type WHERE user_id = :user_id AND punch_type = 'BREAK' AND punch_day = CURDATE()";
+					$params['bindParam'] = array(
+						':user_id' 		=> $_SESSION['id'],
+						':punch_type'	=> 'BREAK'
+					);
+			
+					if (dbAccess($params))
+					{
+
+						$params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
+						$params['bindParam'] = array(
+							':emp_status' => 'IN_BREAK',
+							':id'	=> $_SESSION['id']
+						);
+					
+						dbAccess($params);
+
+					}
+			
+				}
+
+			break;
+
+		}
+
+	}
+
+				
+	return $params;
+
+}
+
+function punchBreak($params)
+{
+
+	$params = filterParams($params);
+
+	foreach ($_REQUEST as $key => $value)
+	{
+
+		switch ($key)
+		{
+
+			case 'out_break_1':
+
+				$params['dba']['u'] = "UPDATE user_punch SET out_break_1 = NOW() WHERE user_id = :user_id AND punch_day = CURDATE()";
+				$params['bindParam'] = array(
+					':user_id' => $_SESSION['id']
+				);
+
+				if (dbAccess($params))
+				{
+
+					$params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
+					$params['bindParam'] = array(
+						':emp_status' => 'OUT_BREAK_1',
+						':id'	=> $_SESSION['id']
+					);
+
+					dbAccess($params);
+
+				}
+			
+			break;
+
+			case 'in_break_1':
+
+				$params['dba']['u'] = "UPDATE user_punch SET in_break_1 = NOW() WHERE user_id = :user_id AND punch_day = CURDATE()";
+				$params['bindParam'] = array(
+					':user_id' => $_SESSION['id']
+				);
+
+				if (dbAccess($params))
+				{
+
+					$params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
+					$params['bindParam'] = array(
+						':emp_status' => 'IN_BREAK_1',
+						':id'	=> $_SESSION['id']
+					);
+
+					dbAccess($params);
+
+				}
+			
+			break;
+
+			case 'out_break_2':
+
+				$params['dba']['u'] = "UPDATE user_punch SET out_break_2 = NOW() WHERE user_id = :user_id AND punch_day = CURDATE()";
+				$params['bindParam'] = array(
+					':user_id' => $_SESSION['id']
+				);
+
+				if (dbAccess($params))
+				{
+
+					$params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
+					$params['bindParam'] = array(
+						':emp_status' => 'OUT_BREAK_2',
+						':id'	=> $_SESSION['id']
+					);
+
+					dbAccess($params);
+
+				}
+			
+			break;
+
+			case 'in_break_2':
+
+				$params['dba']['u'] = "UPDATE user_punch SET in_break_2 = NOW() WHERE user_id = :user_id AND punch_day = CURDATE()";
+				$params['bindParam'] = array(
+					':user_id' => $_SESSION['id']
+				);
+
+				if (dbAccess($params))
+				{
+
+					$params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
+					$params['bindParam'] = array(
+						':emp_status' => 'IN_BREAK_2',
+						':id'	=> $_SESSION['id']
+					);
+
+					dbAccess($params);
+
+				}
+			
+			break;
+
+			case 'out_lunch':
+				// get user input for outBreak
+				// update created row of current day of punch
+				$params['dba']['u'] = "UPDATE user_punch SET out_lunch = NOW() WHERE user_id = :user_id AND punch_day = CURDATE()";
+				$params['bindParam'] = array(
+					':user_id' => $_SESSION['id']
+				);
+
+				if (dbAccess($params))
+				{
+
+					$params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
+					$params['bindParam'] = array(
+						':emp_status' => 'LUNCH',
+						':id'	=> $_SESSION['id']
+					);
+
+					dbAccess($params);
+
+				}
+
+			break;
+
+			case 'in_lunch':
+				// get user input for outBreak
+				// update created row of current day of punch
+				$params['dba']['u'] = "UPDATE user_punch SET in_lunch = NOW() WHERE user_id = :user_id AND punch_day = CURDATE()";
+				$params['bindParam'] = array(
+					':user_id' => $_SESSION['id']
+				);
+
+				if (dbAccess($params))
+				{
+
+					$params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
+					$params['bindParam'] = array(
+						':emp_status' => 'IN',
+						':id'	=> $_SESSION['id']
+					);
+
+					dbAccess($params);
+
+				}
+
+			break;
+
+			// no other action needed
+			default:
+			break;
+
+		}
+
+	}
+
+	return $params;
+
+}
+
 ?>
