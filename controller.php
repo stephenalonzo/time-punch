@@ -21,11 +21,11 @@ foreach ($_REQUEST as $key => $value)
             userPunch($params);
         break;
 
-        case 'out_break':
+        case 'out_break_1':
             userPunch($params);
         break;
 
-        case 'in_break':
+        case 'in_break_1':
             userPunch($params);
         break;
 
@@ -34,6 +34,14 @@ foreach ($_REQUEST as $key => $value)
         break;
 
         case 'in_lunch':
+            userPunch($params);
+        break;
+
+        case 'out_break_2':
+            userPunch($params);
+        break;
+
+        case 'in_break_2':
             userPunch($params);
         break;
 
