@@ -29,13 +29,13 @@ if (isset($_SESSION['id']) && $_SESSION['id'])
         </div>
 
         <nav aria-label="Global" class="hidden items-center gap-8 font-medium lg:flex lg:w-0 lg:flex-1">
-            <a class="text-gray-900" href="">Home</a>
-            <a class="text-gray-900" href="">Timesheet</a>
+            <a class="text-gray-900" href="./">Home</a>
+            <a class="text-gray-900" href="./timesheet.php">Timesheet</a>
             <a class="text-gray-900" href="">Time-Off Request</a>
         </nav>
 
         <div class="hidden items-center space-x-4 lg:flex">
-            <span class="text-sm">Welcome back, <?php echo $_SESSION['first_name']; ?>!</span>
+            <span class="text-sm">Welcome back, <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['punch_token']; ?>!</span>
 
             <!-- <a href="./logout.php" class="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white">
                 Logout

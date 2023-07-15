@@ -79,20 +79,58 @@ function readOnlyTimesheet($params)
     foreach ($results as $row)
     {
 
-        $params['timesheetRow'] =
-        '<tr>
-            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">'.date('D m/d/Y', strtotime($row['punch_day'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_day'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_break_1'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_break_1'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_lunch'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_lunch'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_break_2'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_break_2'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_day'])).'</td>
-        </tr>';
+        if ($row['out_break_1'] == '00:00:00' || $row['in_break_1'] == '00:00:00' || $row['out_lunch'] == '00:00:00' || $row['in_lunch'] == '00:00:00'|| $row['out_break_2'] == '00:00:00' || $row['in_break_2'] == '00:00:00')
+        {
+
+            $params['timesheetRow'] =
+            '<tr>
+                <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">'.date('D m/d/Y', strtotime($row['punch_day'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_day'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">--:--:--</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">--:--:--</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">--:--:--</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">--:--:--</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">--:--:--</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">--:--:--</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_day'])).'</td>
+            </tr>';
+
+        } else {
+
+            $params['timesheetRow'] =
+            '<tr>
+                <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">'.date('D m/d/Y', strtotime($row['punch_day'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_day'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_break_1'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_break_1'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_lunch'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_lunch'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_break_2'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_break_2'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_day'])).'</td>
+            </tr>';
+
+        }
 
         echo $params['timesheetRow'];
+
+    }
+
+}
+
+function viewPayPeriods($params)
+{
+
+    $params = filterParams($params);
+    $results = getPayPeriods($params);
+
+    foreach ($results as $row)
+    {
+
+        $params['payPeriodsList'] =
+        '<option value="'.$row['id'].'">'.date('m/d/Y', strtotime($row['pp_start'])).''.' - '.''.date('m/d/Y', strtotime($row['pp_end'])).'</option>';
+
+        echo $params['payPeriodsList'];
 
     }
 
