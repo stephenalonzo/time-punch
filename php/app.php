@@ -86,6 +86,8 @@ function userLogin($params)
 {
 
 	$params = filterParams($params);
+	$params = setPayPeriod($params);
+	$params = generatePayPeriod($params);
 
 	$params['dba']['s'] = "SELECT * FROM users WHERE username = :username AND password = :password";
 	$params['bindParam'] = array(
@@ -344,25 +346,38 @@ function userPunch($params)
 					if (dbAccess($params))
 					{
 
-						$results = getHoursWorked($params);
+						$results = getHoursWorkedToday($params);
 						$hours = 0;
+						$sum_breaks_1 = 0;
+						$sum_breaks_2 = 0;
+						$sum_lunch = 0;
 
 						foreach ($results as $row)
 						{
 
 							$start = strtotime( $row[ 'in_day' ] );
+							$out_break_1 = strtotime( $row['out_break_1']);
+							$in_break_1 = strtotime( $row['in_break_1']);
+							$out_lunch = strtotime( $row['out_lunch']);
+							$in_lunch = strtotime( $row['in_lunch']);
+							$out_break_2 = strtotime( $row['out_break_2']);
+							$in_break_2 = strtotime( $row['in_break_2']);
 							$stop = strtotime( $row[ 'out_day' ]);
-							$hours += ( $stop - $start ) / 3600;
+							$sum_breaks_2 += ($in_break_2 - $out_break_2) / 3600;
+							$sum_breaks_1 += ($in_break_1 - $out_break_1) / 3600;
+							$sum_lunch += ($in_lunch - $out_lunch) / 3600;
+							$total = $hours + ($stop - $start) / 3600;
 
 						}
 
-						$params['dba']['u'] = "UPDATE user_punch SET total_hours = :total_hours WHERE user_id = :user_id AND punch_day = CURDATE()";
-				$params['bindParam'] = array(
-					':user_id' 		=> $_SESSION['id'],
-					':total_hours'	=> round($hours, 2)
-				);
+						$total_hours = $total - ($sum_breaks_1 + $sum_breaks_2 + $sum_lunch);
 
-				dbAccess($params);
+						$params['dba']['u'] = "UPDATE user_punch SET total_hours = :total_hours WHERE user_id = :user_id AND punch_day = CURDATE() AND punch_token = :punch_token";
+						$params['bindParam'] = array(
+							':user_id' 		=> $_SESSION['id'],
+							':total_hours'	=> round($total_hours, 2),
+							':punch_token'	=> $_SESSION['punch_token']
+						);
 
 					}
 
@@ -434,7 +449,11 @@ function userPunchData($params)
 	} else {
 
 		// Create sequence to display timesheet under current pay-period
-		$params['dba']['s'] = "SELECT * FROM pay_period WHERE CURDATE() BETWEEN pp_start AND pp_end";
+
+		$params['dba']['s'] = "SELECT * FROM pay_period WHERE id = :id";
+		$params['bindParam'] = array(
+			':id'	=> $_SESSION['pay_period']
+		);
 
 		$stmt = dbAccess($params);
 		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -462,8 +481,6 @@ function getPayPeriods($params)
 {
 
 	$params = filterParams($params);
-
-	// Get employee punch data to build out timesheet
 
 	$params['dba']['s'] = "SELECT * FROM pay_period ORDER BY pp_end DESC";
 
@@ -496,24 +513,25 @@ function generatePayPeriod($params)
 				':pp_end'	=> date('Y-m-d', strtotime($row['pp_end'] . '+ 14 days'))
 			);
 
+			dbAccess($params);
+
 		}
 
 	}
 
-	dbAccess($params);
+	return $params;
 
 }
 
-generatePayPeriod($params);
-
-function getHoursWorked($params)
+function getHoursWorkedToday($params)
 {
 
 	$params = filterParams($params);
 	
-	$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day = CURDATE()";
+	$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day = CURDATE() AND punch_token = :punch_token";
 	$params['bindParam'] = array(
-		':user_id'	=> $_SESSION['id']
+		':user_id'	=> $_SESSION['id'],
+		':punch_token'	=> $_SESSION['punch_token']
 	);
 
 	$stmt = dbAccess($params);
@@ -521,6 +539,117 @@ function getHoursWorked($params)
 
 	return $results;
 
+}
+
+function getHoursWorkedWeekly($params)
+{
+
+	$params = filterParams($params);
+
+	// Show the total hours worked if the employee selects a specific pay-period
+
+	if (isset($params['pay_period']))
+	{
+
+		$params['dba']['s'] = "SELECT * FROM pay_period WHERE id = :id";
+		$params['bindParam'] = array(
+			':id'	=> $params['pay_period']
+		);
+	
+		$stmt = dbAccess($params);
+		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		foreach ($results as $row)
+		{
+	
+			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN :pp_start AND :pp_end";
+			$params['bindParam'] = array(
+				':user_id'	=> $_SESSION['id'],
+				':pp_start'	=> $row['pp_start'],
+				':pp_end'	=> $row['pp_end']
+			);
+		
+			$stmt = dbAccess($params);
+			$params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+		}
+
+	} else {
+
+		// Default will be able to view the total hours worked in the current pay-period
+
+		$params['dba']['s'] = "SELECT * FROM pay_period WHERE id = :id";
+		$params['bindParam'] = array(
+			':id'	=> $_SESSION['id']
+		);
+	
+		$stmt = dbAccess($params);
+		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		foreach ($results as $row)
+		{
+	
+			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN :pp_start AND :pp_end";
+			$params['bindParam'] = array(
+				':user_id'	=> $_SESSION['id'],
+				':pp_start'	=> $row['pp_start'],
+				':pp_end'	=> $row['pp_end']
+			);
+		
+			$stmt = dbAccess($params);
+			$params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+		}
+
+	}
+
+	return $params;
+
+}
+
+function calculateWeeklyHours($params)
+{
+
+	$params = filterParams($params);
+	$params = getHoursWorkedWeekly($params);
+
+	$total = 0;
+
+	foreach ($params['results'] as $row)
+	{
+
+		if (!empty($row['total_hours']))
+		{
+
+			$total += $row['total_hours'].'<br>';
+			
+		}
+
+	}
+
+	echo $total;
+
+	return $params;
+
+}
+
+function setPayPeriod($params)
+{
+
+	$params['dba']['s'] = "SELECT * FROM pay_period WHERE CURDATE() BETWEEN pp_start AND pp_end";
+		
+	$stmt = dbAccess($params);
+	$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	foreach ($results as $row)
+	{
+
+		$_SESSION['pay_period'] = $row['id'];
+
+	}
+
+	return $params;
+	
 }
 
 ?>
