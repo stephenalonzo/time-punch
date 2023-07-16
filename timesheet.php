@@ -69,6 +69,9 @@ require_once('controller.php');
                             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                 Out Day
                             </th>
+                            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                Total Hours
+                            </th>
                         </tr>
                     </thead>
 
@@ -82,6 +85,9 @@ require_once('controller.php');
                         ?>
                     </tbody>
                 </table>
+            </div>
+            <div class="flex flex-row items-center justify-end">
+                <span class="font-medium">Total Hours worked: <?php $params = viewTotalHours($params); echo $params['totalHours']; ?></span>
             </div>
         </div>
     </section>

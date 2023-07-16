@@ -7,8 +7,6 @@ date_default_timezone_set('America/Los_Angeles');
 require_once ('php/app.php');
 require_once ('php/app-views.php');
 
-echo $hours += 2;
-
 foreach ($_REQUEST as $key => $value)
 {
 

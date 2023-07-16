@@ -20,28 +20,24 @@ function buttonGroup($params)
             case 'IN':
                 $params['buttonGroup'] = 
                 '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="out_break_1" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>
-                <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-blue-700 text-white">Out Lunch</button>';
+                <button type="submit" name="out_break_1" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>';
             break;
 
             case 'OUT_BREAK_1':
                 $params['buttonGroup'] = 
                 '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="in_break_1" class="px-4 py-2 rounded-md bg-green-500 text-white">In Break</button>
-                <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-blue-700 text-white">Out Lunch</button>';
+                <button type="submit" name="in_break_1" class="px-4 py-2 rounded-md bg-green-500 text-white">In Break</button>';
             break;
             
             case 'IN_BREAK_1':
                 $params['buttonGroup'] = 
                 '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="out_break_2" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>
                 <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-blue-700 text-white">Out Lunch</button>';
             break;
 
             case 'OUT_LUNCH':
                 $params['buttonGroup'] = 
                 '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="out_break_2" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>
                 <button type="submit" name="in_lunch" class="px-4 py-2 rounded-md bg-green-500 text-white">In Lunch</button>';
             break;
 
@@ -79,7 +75,7 @@ function readOnlyTimesheet($params)
     foreach ($results as $row)
     {
 
-        if ($row['out_break_1'] == '00:00:00' || $row['in_break_1'] == '00:00:00' || $row['out_lunch'] == '00:00:00' || $row['in_lunch'] == '00:00:00'|| $row['out_break_2'] == '00:00:00' || $row['in_break_2'] == '00:00:00')
+        if ($row['out_break_1'] == '00:00:00' || $row['in_break_1'] == '00:00:00' || $row['out_lunch'] == '00:00:00' || $row['in_lunch'] == '00:00:00'|| $row['out_break_2'] == '00:00:00' || $row['in_break_2'] == '00:00:00' || empty($row['total_hours']))
         {
 
             $params['timesheetRow'] =
@@ -93,6 +89,7 @@ function readOnlyTimesheet($params)
                 <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">--:--:--</td>
                 <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">--:--:--</td>
                 <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_day'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">--.--</td>
             </tr>';
 
         } else {
@@ -108,6 +105,7 @@ function readOnlyTimesheet($params)
                 <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_break_2'])).'</td>
                 <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['in_break_2'])).'</td>
                 <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('H:i:s A', strtotime($row['out_day'])).'</td>
+                <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.$row['total_hours'].'</td>
             </tr>';
 
         }
@@ -133,6 +131,18 @@ function viewPayPeriods($params)
         echo $params['payPeriodsList'];
 
     }
+
+}
+
+function viewTotalHours($params)
+{
+
+    $params = filterParams($params);
+    $params = calculateWeeklyHours($params);
+
+    $params['totalHours'] = $params['totalCalculated'];
+
+    return $params;
 
 }
 
