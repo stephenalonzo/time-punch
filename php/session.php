@@ -2,15 +2,18 @@
 
 session_start();
 
-// set timeout period in seconds
+// Set timeout period in seconds
 $inactive = 300;
 
-// check to see if $_SESSION['timeout'] is set
-if(isset($_SESSION['timeout']) ) {
+// Check to see if $_SESSION['timeout'] is set
+
+if(isset($_SESSION['timeout']))
+{
 
 	$session_life = time() - $_SESSION['timeout'];
 	
-    if($session_life > $inactive) { 
+    if ($session_life > $inactive)
+    { 
         
         session_destroy(); 
         header("Location: login.php"); 
