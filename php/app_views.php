@@ -58,11 +58,18 @@ function buttonGroup($params)
                 '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>';
             break;
 
+            default:
+                $params['buttonGroup'] = 
+                    '<button type="submit" name="in_day" class="px-4 py-2 rounded-md bg-green-500 text-white">In Day</button>';
+            break;
+
         }
+
+        echo $params['buttonGroup'];
 
     }
 
-    return $params;
+    // return $params;
 
 }
 
@@ -93,6 +100,8 @@ function readOnlyTimesheet($params)
 
     }
 
+    // return $params;
+
 }
 
 function viewPayPeriods($params)
@@ -110,6 +119,8 @@ function viewPayPeriods($params)
         echo $params['payPeriodsList'];
 
     }
+
+    // return $params;
 
 }
 

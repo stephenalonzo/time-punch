@@ -7,7 +7,7 @@ function getHoursWorkedWeekly($params)
 
 	// Get the total hours worked if the employee selects a specific pay-period
 
-	if (isset($params['pay_period']))
+	if ($params['pay_period'])
 	{
 
 		$params['dba']['s'] = "SELECT * FROM pay_period WHERE id = :id";
