@@ -5,11 +5,8 @@ function totalHoursPunch($params)
 
     $params = filterParams($params);
 
-    $params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
-    $params['bindParam'] = array(
-        ':emp_status' => 'OUT',
-        ':id'	=> $_SESSION['id']
-    );
+    $status = 'OUT';
+    $params = updateEmpStatus($params, $status);
     
     if (dbAccess($params))
     {
@@ -45,7 +42,7 @@ function totalHoursPunch($params)
         $params['dba']['u'] = "UPDATE user_punch SET total_hours = :total_hours WHERE user_id = :user_id AND punch_day = CURDATE() AND punch_token = :punch_token";
         $params['bindParam'] = array(
             ':user_id' 		=> $_SESSION['id'],
-            ':total_hours'	=> round($total_hours, 2),
+            ':total_hours'	=> round($total_hours),
             ':punch_token'	=> $_SESSION['punch_token']
         );
     

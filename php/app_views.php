@@ -14,53 +14,53 @@ function buttonGroup($params)
 
             case 'OUT':
                 $params['buttonGroup'] = 
-                '<button type="submit" name="in_day" class="px-4 py-2 rounded-md bg-green-500 text-white">In Day</button>';
+                '<button type="submit" name="in_day" class="px-4 py-2 rounded-md bg-green-500 text-white font-semibold">In Day</button>';
             break;
 
             case 'IN':
                 $params['buttonGroup'] = 
-                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="out_break_1" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>';
+                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white font-semibold">Out Day</button>
+                <button type="submit" name="out_break_1" class="px-4 py-2 rounded-md bg-yellow-500 text-white font-semibold">Out Break</button>';
             break;
 
             case 'OUT_BREAK_1':
                 $params['buttonGroup'] = 
-                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="in_break_1" class="px-4 py-2 rounded-md bg-green-500 text-white">In Break</button>';
+                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white font-semibold">Out Day</button>
+                <button type="submit" name="in_break_1" class="px-4 py-2 rounded-md bg-green-500 text-white font-semibold">In Break</button>';
             break;
             
             case 'IN_BREAK_1':
                 $params['buttonGroup'] = 
-                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-blue-700 text-white">Out Lunch</button>';
+                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white font-semibold">Out Day</button>
+                <button type="submit" name="out_lunch" class="px-4 py-2 rounded-md bg-blue-700 text-white font-semibold">Out Lunch</button>';
             break;
 
             case 'OUT_LUNCH':
                 $params['buttonGroup'] = 
-                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="in_lunch" class="px-4 py-2 rounded-md bg-green-500 text-white">In Lunch</button>';
+                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white font-semibold">Out Day</button>
+                <button type="submit" name="in_lunch" class="px-4 py-2 rounded-md bg-green-500 text-white font-semibold">In Lunch</button>';
             break;
 
             case 'IN_LUNCH':
                 $params['buttonGroup'] = 
-                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="out_break_2" class="px-4 py-2 rounded-md bg-yellow-500 text-white">Out Break</button>';
+                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white font-semibold">Out Day</button>
+                <button type="submit" name="out_break_2" class="px-4 py-2 rounded-md bg-yellow-500 text-white font-semibold">Out Break</button>';
             break;
 
             case 'OUT_BREAK_2':
                 $params['buttonGroup'] = 
-                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>
-                <button type="submit" name="in_break_2" class="px-4 py-2 rounded-md bg-green-500 text-white">In Break</button>';
+                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white font-semibold">Out Day</button>
+                <button type="submit" name="in_break_2" class="px-4 py-2 rounded-md bg-green-500 text-white font-semibold">In Break</button>';
             break;
 
             case 'IN_BREAK_2':
                 $params['buttonGroup'] = 
-                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white">Out Day</button>';
+                '<button type="submit" name="out_day" class="px-4 py-2 rounded-md bg-red-700 text-white font-semibold">Out Day</button>';
             break;
 
             default:
                 $params['buttonGroup'] = 
-                    '<button type="submit" name="in_day" class="px-4 py-2 rounded-md bg-green-500 text-white">In Day</button>';
+                    '<button type="submit" name="in_day" class="px-4 py-2 rounded-md bg-green-500 text-white font-semibold">In Day</button>';
             break;
 
         }
@@ -100,8 +100,6 @@ function readOnlyTimesheet($params)
 
     }
 
-    // return $params;
-
 }
 
 function viewPayPeriods($params)
@@ -113,14 +111,24 @@ function viewPayPeriods($params)
     foreach ($params['results'] as $row)
     {
 
-        $params['payPeriodsList'] =
-        '<option value="'.$row['id'].'">'.date('m/d/Y', strtotime($row['pp_start'])).''.' - '.''.date('m/d/Y', strtotime($row['pp_end'])).'</option>';
+        switch ($params['pay_period'])
+        {
+
+            case $row['id']:
+                $params['payPeriodsList'] =
+                '<option value="'.$row['id'].'" selected>'.date('m/d/Y', strtotime($row['pp_start'])).''.' - '.''.date('m/d/Y', strtotime($row['pp_end'])).'</option>';
+            break;
+
+            default:
+                $params['payPeriodsList'] =
+                '<option value="'.$row['id'].'">'.date('m/d/Y', strtotime($row['pp_start'])).''.' - '.''.date('m/d/Y', strtotime($row['pp_end'])).'</option>';
+            break;
+
+        }
 
         echo $params['payPeriodsList'];
 
     }
-
-    // return $params;
 
 }
 

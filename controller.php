@@ -10,6 +10,7 @@ require_once ('php/user_session.php');
 require_once ('php/user_punch_input.php');
 require_once ('php/total_hours_punch.php');
 require_once ('php/get_employee_status.php');
+require_once ('php/update_employee_status.php');
 require_once ('php/get_pay_period_list.php');
 require_once ('php/generate_pay_period.php');
 require_once ('php/get_hours_worked_today.php');

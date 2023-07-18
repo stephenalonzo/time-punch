@@ -21,28 +21,30 @@ require_once ('controller.php');
     <section class="px-4 py-6">
         <div class="container mx-auto">
             <div class="flex flex-col items-center justify-center space-y-1">
-                <div id="time" class="font-semibold text-3xl"></div>
+                <div id="time" class="font-semibold text-4xl"></div>
                 <div id="date"></div>
             </div>
         </div>
     </section>
     <section class="px-4 py-6">
-        <div class="container mx-auto w-2/3 space-y-4">
-            <div class="flex flex-row items-center justify-between">
-                <form action="" method="post" class="w-1/3 flex flex-row items-end space-x-4">
+        <div class="container mx-auto space-y-4 lg:w-2/3">
+            <div class="flex flex-col items-center justify-center lg:flex-row lg:justify-between">
+                <form action="" method="post" class="w-full flex flex-row items-end justify-center space-x-4 lg:justify-start">
                     <div>
-                        <label for="HeadlineAct" class="block text-sm font-medium text-gray-900">
+                        <label for="HeadlineAct" class="block font-medium text-gray-900">
                             Select Pay-Period:
                         </label>
-                        <select name="pay_period" id="HeadlineAct" class="mt-1.5 p-2 w-full rounded-lg border border-gray-300 text-gray-700 sm:text-sm">
+                        <select name="pay_period" id="HeadlineAct" class="mt-1.5 p-2 w-full rounded-lg border border-gray-300 text-gray-700">
                             <?php
-                            $params = viewPayPeriods($params);
+
+                                $params = viewPayPeriods($params);
+
                             ?>
                         </select>
                     </div>
-                    <button type="submit" name="pp_view" class="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white">View</button>
+                    <button type="submit" name="pp_view" class="rounded-lg bg-black/90 px-5 py-2 font-semibold text-white">View</button>
                 </form>
-                <div class="flex items-center justify-center space-x-4">
+                <div class="flex items-center justify-center space-x-4 w-full lg:justify-end">
                     <form action="" method="post" class="m-0">
                         <?php 
                     
@@ -52,8 +54,8 @@ require_once ('controller.php');
                     </form>
                 </div>
             </div>
-            <div class="rounded-lg border border-gray-200 overflow-hidden">
-                <table class="w-full divide-y-2 divide-gray-200 bg-white text-sm">
+            <div class="rounded-lg border border-gray-200 overflow-x-auto">
+                <table class="w-full divide-y-2 divide-gray-200 bg-white">
                     <thead>
                         <tr>
                             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
@@ -99,7 +101,7 @@ require_once ('controller.php');
                 </table>
             </div>
             <div class="flex flex-row items-center justify-end">
-                <span class="font-medium">Total Hours worked: <?php $params = viewTotalHours($params); echo $params['totalHours']; ?></span>
+                <span class="font-medium">Total Hours: <?php $params = viewTotalHours($params); echo $params['totalHours']; ?></span>
             </div>
         </div>
     </section>
