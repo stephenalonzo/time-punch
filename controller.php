@@ -8,6 +8,7 @@ require_once ('php/db_access.php');
 require_once ('php/filter_params.php');
 require_once ('php/user_session.php');
 require_once ('php/user_punch_input.php');
+require_once ('php/time_off_request_input.php');
 require_once ('php/total_hours_punch.php');
 require_once ('php/get_employee_status.php');
 require_once ('php/update_employee_status.php');
@@ -18,6 +19,7 @@ require_once ('php/get_hours_worked_weekly.php');
 require_once ('php/set_pay_period.php');
 require_once ('php/calculate_weekly_hours.php');
 require_once ('php/user_punch_data.php');
+require_once ('php/get_accrual.php');
 require_once ('php/app_views.php');
 
 foreach ($_REQUEST as $key => $value)
@@ -61,6 +63,10 @@ foreach ($_REQUEST as $key => $value)
         case 'out_day':
             userPunch($params);
             totalHoursPunch($params);
+        break;
+
+        case 'timeoff_request':
+            timeOffRequest($params);
         break;
 
         case 'logout':

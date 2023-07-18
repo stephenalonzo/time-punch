@@ -14,15 +14,15 @@ function calculateWeeklyHours($params)
 		if (!empty($row['total_hours']))
 		{
 
-			$params['total'] += $row['total_hours'].'<br>';
+			$params['total'] += $row['total_hours'];
+			$params['total_hours'] = $params['total'];
 			
 		}
 
+		
 	}
-
-	echo $params['total'];
-
-	return $params;
+	
+	echo $params['total_hours'];
 
 }
 

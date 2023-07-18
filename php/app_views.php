@@ -132,13 +132,18 @@ function viewPayPeriods($params)
 
 }
 
-function viewTotalHours($params)
+function viewAccrual($params)
 {
 
     $params = filterParams($params);
-    $params = calculateWeeklyHours($params);
+    $params = getAccrual($params);
 
-    $params['totalHours'] = $params['totalCalculated'];
+    foreach ($params['results'] as $row)
+    {
+
+        $params['accrual'] = $row['accrual'];
+
+    }
 
     return $params;
 

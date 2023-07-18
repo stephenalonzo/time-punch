@@ -7,7 +7,7 @@ function getHoursWorkedWeekly($params)
 
 	// Get the total hours worked if the employee selects a specific pay-period
 
-	if ($params['pay_period'])
+	if (isset($params['pay_period']))
 	{
 
 		$params['dba']['s'] = "SELECT * FROM pay_period WHERE id = :id";
@@ -27,9 +27,6 @@ function getHoursWorkedWeekly($params)
 				':pp_start'	=> $row['pp_start'],
 				':pp_end'	=> $row['pp_end']
 			);
-		
-			$stmt = dbAccess($params);
-			$params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 		}
 
@@ -39,7 +36,7 @@ function getHoursWorkedWeekly($params)
 
 		$params['dba']['s'] = "SELECT * FROM pay_period WHERE id = :id";
 		$params['bindParam'] = array(
-			':id'	=> $_SESSION['id']
+			':id'	=> $_SESSION['pay_period']
 		);
 	
 		$stmt = dbAccess($params);
@@ -54,13 +51,13 @@ function getHoursWorkedWeekly($params)
 				':pp_start'	=> $row['pp_start'],
 				':pp_end'	=> $row['pp_end']
 			);
-		
-			$stmt = dbAccess($params);
-			$params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 		}
 
 	}
+
+	$stmt = dbAccess($params);
+	$params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 	return $params;
 

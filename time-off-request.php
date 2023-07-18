@@ -27,26 +27,30 @@ require_once ('controller.php');
                     </div>
 
                     <form action="" method="POST" class="mx-auto mb-0 mt-8 max-w-md space-y-4">
-                        <div>
-                            <div class="relative">
-                                <input type="text" name="username" class="w-full rounded-md border border-gray-200 p-4 pe-12" placeholder="Employee ID" />
-                            </div>
-                        </div>
+                        <input type="text" name="username" class="w-full rounded-md border border-gray-200 p-4" placeholder="Employee ID" />
 
                         <div class="flex flex-row items-center space-x-4">
-                            <input type="date" name="timeoff_start" class="w-full rounded-md border border-gray-200 p-4 pe-12" placeholder="Employee ID" />
-                            <input type="date" name="timeoff_end" class="w-full rounded-md border border-gray-200 p-4 pe-12" placeholder="Employee ID" />
+                            <input type="date" name="timeoff_start" class="w-full rounded-md border border-gray-200 p-4" />
+                            <input type="date" name="timeoff_end" class="w-full rounded-md border border-gray-200 p-4" />
+                        </div>
+                        
+                        <div class="grid grid-cols-5 gap-4 items-center">
+                            <?php 
+                            
+                            $params = viewAccrual($params);
+                            
+                            ?>
+
+                            <label for="" class="col-span-2"><span class="font-medium">Available Accrual</span>: <?php echo $params['accrual']; ?></label>
+
+                            <input type="number" name="timeoff_hours" class="col-span-3 w-full rounded-md border border-gray-200 p-4" max="<?php echo $params['accrual']; ?>"/>
                         </div>
 
-                        <div class="flex flex-row items-center space-x-4">
-                            <textarea name="timeoff_reason" id="" class="p-4 rounded-md w-full h-52 border border-gray-200 resize-none" placeholder="Reason for Leave"></textarea>
-                        </div>
+                        <textarea name="timeoff_reason" id="" class="p-4 rounded-md w-full h-52 border border-gray-200 resize-none" placeholder="Reason for Leave"></textarea>
 
-                        <div class="flex items-center justify-between">
-                            <button type="submit" name="timeoff_request" class="inline-block rounded-md bg-blue-500 px-5 py-3 font-medium text-white">
+                        <button type="submit" name="timeoff_request" class="inline-block rounded-md bg-blue-500 px-5 py-3 font-medium text-white">
                                 Submit
-                            </button>
-                        </div>
+                        </button>
                     </form>
                 </div>
             </div>

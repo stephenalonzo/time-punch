@@ -16,7 +16,7 @@ function getHoursWorkedToday($params)
 	$stmt = dbAccess($params);
 	$params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-	return $params['results'];
+	return $params;
 
 }
 

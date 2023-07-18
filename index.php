@@ -101,7 +101,7 @@ require_once ('controller.php');
                 </table>
             </div>
             <div class="flex flex-row items-center justify-end">
-                <span class="font-medium">Total Hours: <?php $params = viewTotalHours($params); echo $params['totalHours']; ?></span>
+                <span class="font-medium">Total Hours: <?php $params = calculateWeeklyHours($params); ?></span>
             </div>
         </div>
     </section>

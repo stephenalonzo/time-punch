@@ -23,7 +23,10 @@ function userPunchData($params)
 		foreach ($params['results'] as $row)
 		{
 	
-			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '".date('Y-m-d', strtotime($row['pp_start']))."' AND '".date('Y-m-d', strtotime($row['pp_end']))."'";
+			$pp_start = date('Y-m-d', strtotime($row['pp_start']));
+			$pp_end = date('Y-m-d', strtotime($row['pp_end']));
+
+			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
 			$params['bindParam'] = array(
 				':user_id'	=> $_SESSION['id']
 			);
@@ -47,8 +50,11 @@ function userPunchData($params)
 
 		foreach ($params['results'] as $row)
 		{
+			
+			$pp_start = date('Y-m-d', strtotime($row['pp_start']));
+			$pp_end = date('Y-m-d', strtotime($row['pp_end']));
 
-			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '".date('Y-m-d', strtotime($row['pp_start']))."' AND '".date('Y-m-d', strtotime($row['pp_end']))."'";
+			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
 			$params['bindParam'] = array(
 				':user_id'	=> $_SESSION['id']
 			);
