@@ -17,9 +17,12 @@ require_once ('php/generate_pay_period.php');
 require_once ('php/get_hours_worked_today.php');
 require_once ('php/get_hours_worked_weekly.php');
 require_once ('php/set_pay_period.php');
-require_once ('php/calculate_weekly_hours.php');
 require_once ('php/user_punch_data.php');
+require_once ('php/get_user_data.php');
+require_once ('php/get_time_off_request.php');
 require_once ('php/get_accrual.php');
+require_once ('php/time_off_request_process.php');
+require_once('php/role_authentication.php');
 require_once ('php/app_views.php');
 
 foreach ($_REQUEST as $key => $value)
@@ -67,6 +70,14 @@ foreach ($_REQUEST as $key => $value)
 
         case 'timeoff_request':
             timeOffRequest($params);
+        break;
+
+        case 'timeoff_approve':
+            timeOffRequestProcess($params);
+        break;
+
+        case 'timeoff_deny':
+            timeOffRequestProcess($params);
         break;
 
         case 'logout':
