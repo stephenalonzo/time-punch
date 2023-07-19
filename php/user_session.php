@@ -4,8 +4,6 @@ function userLogin($params)
 {
 
 	$params = filterParams($params);
-	$params = setPayPeriod($params);
-	$params = generatePayPeriod($params);
 
 	$params['dba']['s'] = "SELECT * FROM users WHERE username = :username AND password = :password";
 	$params['bindParam'] = array(

@@ -13,7 +13,7 @@ require_once ('controller.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oras</title>
+    <title>Home | Oras</title>
     <link rel="stylesheet" href="./dist/output.css">
 </head>
 
@@ -101,7 +101,7 @@ require_once ('controller.php');
                 </table>
             </div>
             <div class="flex flex-row items-center justify-end">
-                <span class="font-medium">Total Hours: <?php $params = calculateWeeklyHours($params); ?></span>
+                <span class="font-medium">Total Hours: <?php $params = viewTotalHours($params); ?></span>
             </div>
         </div>
     </section>
