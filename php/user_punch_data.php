@@ -66,7 +66,7 @@ function userPunchData($params)
 
 	}
 	
-	return $params['results'];
+	return $params;
 
 }
 

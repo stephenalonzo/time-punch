@@ -84,6 +84,11 @@ foreach ($_REQUEST as $key => $value)
             userLogout();
         break;
 
+        default:
+            setPayPeriod($params);
+            generatePayPeriod($params);
+        break;
+
     }
 
 }

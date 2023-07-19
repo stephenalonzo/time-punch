@@ -77,7 +77,7 @@ function readOnlyTimesheet($params)
 {
 
     $params = filterParams($params);
-    $params['results'] = userPunchData($params);
+    $params = userPunchData($params);
 
     foreach ($params['results'] as $row)
     {
