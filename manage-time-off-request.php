@@ -37,6 +37,9 @@ roleAuthentication($params);
                                     Time-Off End
                                 </th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    Reason for Leave
+                                </th>
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                     Status
                                 </th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">

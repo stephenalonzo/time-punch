@@ -35,22 +35,14 @@ require_once ('controller.php');
                             Select Pay-Period:
                         </label>
                         <select name="pay_period" id="HeadlineAct" class="mt-1.5 p-2 w-full rounded-lg border border-gray-300 text-gray-700">
-                            <?php
-
-                                $params = viewPayPeriods($params);
-
-                            ?>
+                            <?php $params = viewPayPeriods($params); ?>
                         </select>
                     </div>
                     <button type="submit" name="pp_view" class="rounded-lg bg-black/90 px-5 py-2 font-semibold text-white">View</button>
                 </form>
                 <div class="flex items-center justify-center space-x-4 w-full lg:justify-end">
                     <form action="" method="post" class="m-0">
-                        <?php 
-                    
-                        $params = buttonGroup($params);
-                    
-                        ?>
+                        <?php $params = buttonGroup($params); ?>
                     </form>
                 </div>
             </div>

@@ -11,7 +11,7 @@ function setPayPeriod($params)
 	foreach ($params['results'] as $row)
 	{
 
-        // Set the pay-period for the application
+        // Set the pay-period
 
 		$_SESSION['pay_period'] = $row['id'];
 

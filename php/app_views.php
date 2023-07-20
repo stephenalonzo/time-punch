@@ -186,49 +186,51 @@ function roleView($params)
     foreach ($params['results'] as $row)
     {
 
-        if ($row['user_role'] == 'ADMIN')
+        switch ($row['user_role'])
         {
 
-            $params['appHeader'] =
-            '<header class="shadow-sm">
-                <div class="mx-auto h-16 max-w-screen-xl flex items-center justify-between px-4">
-                    <nav aria-label="Global" class="items-center gap-8 font-medium flex w-0 flex-1">
-                        <a class="text-gray-900" href="./">Home</a>
-                        <a class="text-gray-900" href="./manage-time-off-request.php">Manage Time-Off Requests</a>
-                    </nav>
-        
-                    <div class="flex items-center space-x-4">
-                        <span class="">Welcome back, '.$_SESSION['first_name'].'!</span>
-                        <form action="" method="post" class="m-0">
-                            <button type="submit" name="logout" class="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </header>';
-
-        } else {
-
-            $params['appHeader'] =
-            '<header class="shadow-sm">
-                <div class="mx-auto h-16 max-w-screen-xl flex items-center justify-between px-4">
-                    <nav aria-label="Global" class="items-center gap-8 font-medium flex w-0 flex-1">
-                        <a class="text-gray-900" href="./">Home</a>
-                        <a class="text-gray-900" href="./time-off-request.php">Request Time-Off</a>
-                    </nav>
-        
-                    <div class="flex items-center space-x-4">
-                        <span class="">Welcome back, '.$_SESSION['first_name'].'!</span>
-                        <form action="" method="post" class="m-0">
-                            <button type="submit" name="logout" class="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </header>';
+            case 'ADMIN':
+                $params['appHeader'] =
+                '<header class="shadow-sm">
+                    <div class="mx-auto h-16 max-w-screen-xl flex items-center justify-between px-4">
+                        <nav aria-label="Global" class="items-center gap-8 font-medium flex w-0 flex-1">
+                            <a class="text-gray-900" href="./">Home</a>
+                            <a class="text-gray-900" href="./manage-time-off-request.php">Manage Time-Off Requests</a>
+                        </nav>
             
+                        <div class="flex items-center space-x-4">
+                            <span class="">Welcome back, '.$_SESSION['first_name'].'!</span>
+                            <form action="" method="post" class="m-0">
+                                <button type="submit" name="logout" class="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </header>';
+            break;
+
+            default:
+                $params['appHeader'] =
+                '<header class="shadow-sm">
+                    <div class="mx-auto h-16 max-w-screen-xl flex items-center justify-between px-4">
+                        <nav aria-label="Global" class="items-center gap-8 font-medium flex w-0 flex-1">
+                            <a class="text-gray-900" href="./">Home</a>
+                            <a class="text-gray-900" href="./time-off-request.php">Request Time-Off</a>
+                        </nav>
+        
+                        <div class="flex items-center space-x-4">
+                            <span class="">Welcome back, '.$_SESSION['first_name'].'!</span>
+                            <form action="" method="post" class="m-0">
+                                <button type="submit" name="logout" class="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </header>';
+            break;
+
         }
 
     }
@@ -246,26 +248,63 @@ function viewTimeOffRequest($params)
     foreach ($params['results'] as $row)
     {
 
-        $params['timeOffRow'] =
-        '<tr>
-            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
-                <span>'.$row['emp_name'].'</span>
-                <input type="text" name="user_id" class="w-0 opacity-0 pointer-events-none border-none" value="'.$row['user_id'].'" />
-            </td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('D m/d/Y', strtotime($row['timeoff_start'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('D m/d/Y', strtotime($row['timeoff_end'])).'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.$row['timeoff_status'].'</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">
-                <span class="flex flex-row items-center justify-center space-x-4">
-                    <button type="submit" name="timeoff_approve" class="rounded-lg bg-green-500 px-5 py-2 font-semibold text-white">
-                        Approve
-                    </button>
-                    <button type="submit" name="timeoff_deny" class="rounded-lg bg-red-500 px-5 py-2 font-semibold text-white">
-                        Deny
-                    </button>
-                </span>
-            </td> 
-        </tr>';
+        switch ($row['timeoff_status'])
+        {
+
+            case 'PENDING':
+                $params['timeOffRow'] =
+                '<tr>
+                    <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
+                        <span>'.$row['emp_name'].'</span>
+                        <input type="text" name="user_id" class="w-0 opacity-0 pointer-events-none border-none" value="'.$row['user_id'].'" />
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('D m/d/Y', strtotime($row['timeoff_start'])).'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('D m/d/Y', strtotime($row['timeoff_end'])).'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.$row['reason_for_leave'].'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-blue-500 text-center font-medium">'.$row['timeoff_status'].'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">
+                        <span class="flex flex-row items-center justify-center space-x-4">
+                            <button type="submit" name="timeoff_approve" class="rounded-lg bg-green-500 px-5 py-2 font-semibold text-white">
+                                Approve
+                            </button>
+                            <button type="submit" name="timeoff_deny" class="rounded-lg bg-red-500 px-5 py-2 font-semibold text-white">
+                                Deny
+                            </button>
+                        </span>
+                    </td> 
+                </tr>';
+            break;
+
+            case 'APPROVED':
+                $params['timeOffRow'] =
+                '<tr>
+                    <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
+                        <span>'.$row['emp_name'].'</span>
+                        <input type="text" name="user_id" class="w-0 opacity-0 pointer-events-none border-none" value="'.$row['user_id'].'" />
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('D m/d/Y', strtotime($row['timeoff_start'])).'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('D m/d/Y', strtotime($row['timeoff_end'])).'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.$row['reason_for_leave'].'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-green-500 text-center font-medium">'.$row['timeoff_status'].'</td>
+                </tr>';
+            break;
+
+            case 'DENIED':
+                $params['timeOffRow'] =
+                '<tr>
+                    <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">
+                        <span>'.$row['emp_name'].'</span>
+                        <input type="text" name="user_id" class="w-0 opacity-0 pointer-events-none border-none" value="'.$row['user_id'].'" />
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('D m/d/Y', strtotime($row['timeoff_start'])).'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.date('D m/d/Y', strtotime($row['timeoff_end'])).'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">'.$row['reason_for_leave'].'</td>
+                    <td class="whitespace-nowrap px-4 py-2 text-red-500 text-center font-medium">'.$row['timeoff_status'].'</td>
+                </tr>';
+            break;
+
+        }
+
 
         echo $params['timeOffRow'];
 
