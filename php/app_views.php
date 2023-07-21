@@ -135,7 +135,6 @@ function viewPayPeriods($params)
 function viewTotalHours($params)
 {
 
-	$params = filterParams($params);
 	$params = getHoursWorkedWeekly($params);
 
 	$params['total'] = 0;
@@ -148,13 +147,56 @@ function viewTotalHours($params)
 
 			$params['total'] += $row['total_hours'];
 			$params['total_hours'] = $params['total'];
+
+            $params['overtime'] = $params['total'] - 40;
+
+            if ($params['overtime'] >= 0)
+            {
+
+                $params['overtime_hours'] = $params['overtime'];
+                
+            } else {
+
+                $params['overtime_hours'] = 0;
+
+            }
 			
 		}
-
 		
 	}
-	
-	echo $params['total_hours'];
+
+    $user_id = $_SESSION['id'];
+    $acc = getAccrual($params, $user_id);
+
+    foreach ($acc['results'] as $row)
+    {
+
+        $params['total_accruals'] = $row['accrual'];
+
+    }
+
+    $params['hours'] = 
+    '<div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm w-1/2">
+    <dl class="-my-3 divide-y divide-gray-100 text-sm">
+      <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+        <dt class="font-medium text-gray-900">Regular Hours</dt>
+        <dd class="text-gray-700 sm:col-span-2">'.$params['total_hours'].'</dd>
+      </div>
+  
+      <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+        <dt class="font-medium text-gray-900">Overtime Hours</dt>
+        <dd class="text-gray-700 sm:col-span-2">'.$params['overtime_hours'].'</dd>
+      </div>
+  
+      <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+        <dt class="font-medium text-gray-900">Accruals</dt>
+        <dd class="text-gray-700 sm:col-span-2">'.$params['total_accruals'].'</dd>
+      </div>
+      </div>
+    </dl>
+  </div>';
+
+    return $params;
 
 }
 
