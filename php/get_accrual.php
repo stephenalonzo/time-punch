@@ -3,8 +3,6 @@
 function getAccrual($params, $user_id)
 {
 
-    $params = filterParams($params);
-
     // Get user accrual hours
     
     $params['dba']['s'] = "SELECT * FROM accrual_bank WHERE user_id = :user_id";

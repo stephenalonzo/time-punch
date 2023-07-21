@@ -3,8 +3,6 @@
 function getUserData($params)
 {
 
-    $params = filterParams($params);
-
     $params['dba']['s'] = "SELECT * FROM users WHERE id = :id";
     $params['bindParam'] = array(
         ':id'   => $_SESSION['id']

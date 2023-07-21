@@ -2,8 +2,6 @@
 
 function updateEmpStatus($params, $status)
 {
-
-    $params = filterParams($params);
     
     $params['dba']['u'] = "UPDATE users SET emp_status = :emp_status WHERE id = :id";
     $params['bindParam'] = array(

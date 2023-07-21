@@ -80,39 +80,45 @@ function timeOffRequestProcess($params)
                     ':user_id'  => $params['user_id']
                 );
 
-                if (dbAccess($params))
-                {
-
-                    $params['dba']['s'] = "SELECT * FROM time_off_request WHERE user_id = :user_id";
-                    $params['bindParam'] = array(
-                        ':user_id'  => $params['user_id']
-                    );
-
-                    $stmt = dbAccess($params);
-                    $params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                    // If time-off request is denied, delete time-off request record
-
-                    foreach ($params['results'] as $row)
-                    {
-
-                        if (date('Y-m-d 11:59:59') > date('Y-m-d H:i:s', strtotime($row['timeoff_request_created_at'])))
-                        {
-
-                            $params['dba']['d'] = "DELETE FROM time_off_request WHERE user_id = :user_id";
-                            $params['bindParam'] = array(
-                                ':user_id'  => $params['user_id']
-                            );
-
-                            dbAccess($params);
-
-                        }
-
-                    }
-
-                }
+                dbAccess($params);
             break;
 
+        }
+
+    }
+
+    return $params;
+
+}
+
+function deleteTimeOffRequest($params)
+{
+
+    $params = filterParams($params);
+
+    $params['dba']['s'] = "SELECT * FROM time_off_request WHERE user_id = :user_id";
+    $params['bindParam'] = array(
+        ':user_id'  => $params['user_id']
+    );
+
+    $stmt = dbAccess($params);
+    $params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // If time-off request is denied, delete time-off request record
+
+    foreach ($params['results'] as $row)
+    {
+
+        if (date('Y-m-d') > date('Y-m-d', strtotime($row['timeoff_request_created_at'])))
+        {
+
+            $params['dba']['d'] = "DELETE FROM time_off_request WHERE user_id = :user_id";
+            $params['bindParam'] = array(
+                ':user_id'  => $params['user_id']
+            );
+
+            dbAccess($params);
+            
         }
 
     }

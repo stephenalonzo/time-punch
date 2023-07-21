@@ -92,8 +92,8 @@ require_once ('controller.php');
                     </tbody>
                 </table>
             </div>
-            <div class="flex flex-row items-center justify-end">
-                <span class="font-medium">Total Hours: <?php $params = viewTotalHours($params); ?></span>
+            <div class="flex flex-row-reverse justify-end">
+                <?php $params = viewTotalHours($params); echo $params['hours']; ?>
             </div>
         </div>
     </section>

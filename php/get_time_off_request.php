@@ -3,8 +3,6 @@
 function getTimeOffRequest($params)
 {
 
-    $params = filterParams($params);
-
     $params['dba']['s'] = "SELECT * FROM time_off_request";
     
     $stmt = dbAccess($params);

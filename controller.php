@@ -8,8 +8,8 @@ require_once ('php/db_access.php');
 require_once ('php/filter_params.php');
 require_once ('php/user_session.php');
 require_once ('php/user_punch_input.php');
-require_once ('php/time_off_request_input.php');
 require_once ('php/total_hours_punch.php');
+require_once ('php/time_off_request_input.php');
 require_once ('php/get_employee_status.php');
 require_once ('php/update_employee_status.php');
 require_once ('php/get_pay_period_list.php');
@@ -87,6 +87,7 @@ foreach ($_REQUEST as $key => $value)
         default:
             setPayPeriod($params);
             generatePayPeriod($params);
+            deleteTimeOffRequest($params);
         break;
 
     }

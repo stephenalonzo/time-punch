@@ -25,7 +25,7 @@ function userPunch($params)
 				{
 			
 					$status = 'IN';
-					$params = updateEmpStatus($params, $status);
+					updateEmpStatus($params, $status);
 			
 				}
 
@@ -43,7 +43,7 @@ function userPunch($params)
 				{
 			
 					$status = 'OUT_BREAK_1';
-					$params = updateEmpStatus($params, $status);
+					updateEmpStatus($params, $status);
 			
 				}
 
@@ -61,7 +61,7 @@ function userPunch($params)
 				{
 
 					$status = 'IN_BREAK_1';
-					$params = updateEmpStatus($params, $status);
+					updateEmpStatus($params, $status);
 
 				}
 
@@ -79,7 +79,7 @@ function userPunch($params)
 				{
 			
 					$status = 'OUT_LUNCH';
-					$params = updateEmpStatus($params, $status);
+					updateEmpStatus($params, $status);
 			
 				}
 
@@ -97,7 +97,7 @@ function userPunch($params)
 				{
 
 					$status = 'IN_LUNCH';
-					$params = updateEmpStatus($params, $status);
+					updateEmpStatus($params, $status);
 
 				}
 
@@ -115,7 +115,7 @@ function userPunch($params)
 				{
 			
 					$status = 'OUT_BREAK_2';
-					$params = updateEmpStatus($params, $status);
+					updateEmpStatus($params, $status);
 			
 				}
 
@@ -133,7 +133,7 @@ function userPunch($params)
 				{
 
 					$status = 'IN_BREAK_2';
-					$params = updateEmpStatus($params, $status);
+					updateEmpStatus($params, $status);
 
 				}
 
@@ -147,12 +147,7 @@ function userPunch($params)
 					':punch_token'	=> $_SESSION['punch_token']
 				);
 			
-				if (dbAccess($params))
-				{
-
-					$params = totalHoursPunch($params);
-
-				}
+				dbAccess($params);
 
 			break;
 
