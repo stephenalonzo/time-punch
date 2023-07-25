@@ -22,7 +22,8 @@ require_once ('php/get_user_data.php');
 require_once ('php/get_time_off_request.php');
 require_once ('php/get_accrual.php');
 require_once ('php/time_off_request_process.php');
-require_once('php/role_authentication.php');
+require_once ('php/get_employee_list.php');
+require_once ('php/role_authentication.php');
 require_once ('php/app_views.php');
 
 foreach ($_REQUEST as $key => $value)

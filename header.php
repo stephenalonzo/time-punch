@@ -6,7 +6,7 @@ require_once('controller.php');
 if (isset($_SESSION['id']) && $_SESSION['id'])
 {
 
-    $params = roleView($params);
+    roleView($params);
 
 } 
 

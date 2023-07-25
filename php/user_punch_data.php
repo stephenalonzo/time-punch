@@ -23,16 +23,28 @@ function userPunchData($params)
 		foreach ($params['results'] as $row)
 		{
 	
-			$pp_start = date('Y-m-d', strtotime($row['pp_start']));
-			$pp_end = date('Y-m-d', strtotime($row['pp_end']));
+			if (isset($_GET['id']) && $_GET['id'])
+			{
 
-			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
-			$params['bindParam'] = array(
-				':user_id'	=> $_SESSION['id']
-			);
-		
-			$stmt = dbAccess($params);
-			$params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				$pp_start = date('Y-m-d', strtotime($row['pp_start']));
+				$pp_end = date('Y-m-d', strtotime($row['pp_end']));
+	
+				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
+				$params['bindParam'] = array(
+					':user_id'	=> $_GET['id']
+				);
+
+			} else {
+
+				$pp_start = date('Y-m-d', strtotime($row['pp_start']));
+				$pp_end = date('Y-m-d', strtotime($row['pp_end']));
+	
+				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
+				$params['bindParam'] = array(
+					':user_id'	=> $_SESSION['id']
+				);
+				
+			}
 	
 		}
 
@@ -51,20 +63,35 @@ function userPunchData($params)
 		foreach ($params['results'] as $row)
 		{
 			
-			$pp_start = date('Y-m-d', strtotime($row['pp_start']));
-			$pp_end = date('Y-m-d', strtotime($row['pp_end']));
+			if (isset($_GET['id']) && $_GET['id'])
+			{
 
-			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
-			$params['bindParam'] = array(
-				':user_id'	=> $_SESSION['id']
-			);
-		
-			$stmt = dbAccess($params);
-			$params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				$pp_start = date('Y-m-d', strtotime($row['pp_start']));
+				$pp_end = date('Y-m-d', strtotime($row['pp_end']));
+	
+				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
+				$params['bindParam'] = array(
+					':user_id'	=> $_GET['id']
+				);
+
+			} else {
+
+				$pp_start = date('Y-m-d', strtotime($row['pp_start']));
+				$pp_end = date('Y-m-d', strtotime($row['pp_end']));
+	
+				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
+				$params['bindParam'] = array(
+					':user_id'	=> $_SESSION['id']
+				);
+
+			}
 
 		}
 
 	}
+
+	$stmt = dbAccess($params);
+	$params['results'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 	return $params;
 

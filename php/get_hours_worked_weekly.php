@@ -21,12 +21,26 @@ function getHoursWorkedWeekly($params)
 		foreach ($params['results'] as $row)
 		{
 	
-			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN :pp_start AND :pp_end";
-			$params['bindParam'] = array(
-				':user_id'	=> $_SESSION['id'],
-				':pp_start'	=> $row['pp_start'],
-				':pp_end'	=> $row['pp_end']
-			);
+			if (isset($_GET['id']) && $_GET['id'])
+			{
+
+				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN :pp_start AND :pp_end";
+				$params['bindParam'] = array(
+					':user_id'	=> $_GET['id'],
+					':pp_start'	=> $row['pp_start'],
+					':pp_end'	=> $row['pp_end']
+				);
+				
+			} else {
+
+				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN :pp_start AND :pp_end";
+				$params['bindParam'] = array(
+					':user_id'	=> $_SESSION['id'],
+					':pp_start'	=> $row['pp_start'],
+					':pp_end'	=> $row['pp_end']
+				);
+
+			}
 	
 		}
 
@@ -45,12 +59,26 @@ function getHoursWorkedWeekly($params)
 		foreach ($params['results'] as $row)
 		{
 	
-			$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN :pp_start AND :pp_end";
-			$params['bindParam'] = array(
-				':user_id'	=> $_SESSION['id'],
-				':pp_start'	=> $row['pp_start'],
-				':pp_end'	=> $row['pp_end']
-			);
+			if (isset($_GET['id']) && $_GET['id'])
+			{
+
+				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN :pp_start AND :pp_end";
+				$params['bindParam'] = array(
+					':user_id'	=> $_GET['id'],
+					':pp_start'	=> $row['pp_start'],
+					':pp_end'	=> $row['pp_end']
+				);
+
+			} else {
+
+				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN :pp_start AND :pp_end";
+				$params['bindParam'] = array(
+					':user_id'	=> $_SESSION['id'],
+					':pp_start'	=> $row['pp_start'],
+					':pp_end'	=> $row['pp_end']
+				);
+
+			}
 	
 		}
 

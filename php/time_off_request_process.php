@@ -109,7 +109,7 @@ function deleteTimeOffRequest($params)
     foreach ($params['results'] as $row)
     {
 
-        if (date('Y-m-d') > date('Y-m-d', strtotime($row['timeoff_request_created_at'])))
+        if ($row['timeoff_status'] == 'DENIED' && date('Y-m-d') > date('Y-m-d', strtotime($row['timeoff_request_created_at'])))
         {
 
             $params['dba']['d'] = "DELETE FROM time_off_request WHERE user_id = :user_id";

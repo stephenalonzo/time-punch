@@ -3,7 +3,6 @@
 function buttonGroup($params)
 {
 
-    $params = filterParams($params);
     $params = getEmpStatus($params);
 
     foreach ($params['results'] as $row)
@@ -76,7 +75,6 @@ function buttonGroup($params)
 function readOnlyTimesheet($params)
 {
 
-    $params = filterParams($params);
     $params = userPunchData($params);
 
     foreach ($params['results'] as $row)
@@ -105,7 +103,6 @@ function readOnlyTimesheet($params)
 function viewPayPeriods($params)
 {
 
-    $params = filterParams($params);
     $params['results'] = getPayPeriods($params);
 
     foreach ($params['results'] as $row)
@@ -176,19 +173,19 @@ function viewTotalHours($params)
     }
 
     $params['hours'] = 
-    '<div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm w-1/2">
-    <dl class="-my-3 divide-y divide-gray-100 text-sm">
-      <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+    '<div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm w-64">
+    <dl class="-my-3 divide-y divide-gray-100 text-sm w-full">
+      <div class="flex flex-row items-center justify-between p-3">
         <dt class="font-medium text-gray-900">Regular Hours</dt>
         <dd class="text-gray-700 sm:col-span-2">'.$params['total_hours'].'</dd>
       </div>
   
-      <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+      <div class="flex flex-row items-center justify-between p-3">
         <dt class="font-medium text-gray-900">Overtime Hours</dt>
         <dd class="text-gray-700 sm:col-span-2">'.$params['overtime_hours'].'</dd>
       </div>
   
-      <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+      <div class="flex flex-row items-center justify-between p-3">
         <dt class="font-medium text-gray-900">Accruals</dt>
         <dd class="text-gray-700 sm:col-span-2">'.$params['total_accruals'].'</dd>
       </div>
@@ -222,7 +219,6 @@ function viewAccrual($params)
 function roleView($params)
 {
 
-    $params = filterParams($params);
     $params = getUserData($params);
 
     foreach ($params['results'] as $row)
@@ -238,6 +234,7 @@ function roleView($params)
                         <nav aria-label="Global" class="items-center gap-8 font-medium flex w-0 flex-1">
                             <a class="text-gray-900" href="./">Home</a>
                             <a class="text-gray-900" href="./manage-time-off-request.php">Manage Time-Off Requests</a>
+                            <a class="text-gray-900" href="./employee-list.php">View All Employees</a>
                         </nav>
             
                         <div class="flex items-center space-x-4">
@@ -284,7 +281,6 @@ function roleView($params)
 function viewTimeOffRequest($params)
 {
 
-    $params = filterParams($params);
     $params = getTimeOffRequest($params);
 
     foreach ($params['results'] as $row)
@@ -351,6 +347,33 @@ function viewTimeOffRequest($params)
         echo $params['timeOffRow'];
 
     }
+
+}
+
+function viewAllEmployee($params)
+{
+
+    $params = getAllEmployee($params);
+
+    foreach ($params['results'] as $row)
+    {
+
+        $params['employeeList'] =
+        '<tr>
+            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                '.$row['first_name'].' '.$row['last_name'].'
+            </td>
+            <td class="whitespace-nowrap px-4 py-2">
+                <a href="view-employee-timesheet.php?id='.$row['id'].'" class="inline-block rounded bg-blue-500 px-4 py-2 font-medium text-white">
+                    View
+                </a>
+            </td>
+        </tr>';
+
+        echo $params['employeeList'];
+
+    }
+
 
 }
 
