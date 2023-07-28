@@ -22,12 +22,12 @@ function userPunchData($params)
 	
 		foreach ($params['results'] as $row)
 		{
+
+			$pp_start = date('Y-m-d', strtotime($row['pp_start']));
+			$pp_end = date('Y-m-d', strtotime($row['pp_end']));
 	
 			if (isset($_GET['id']) && $_GET['id'])
 			{
-
-				$pp_start = date('Y-m-d', strtotime($row['pp_start']));
-				$pp_end = date('Y-m-d', strtotime($row['pp_end']));
 	
 				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
 				$params['bindParam'] = array(
@@ -35,9 +35,6 @@ function userPunchData($params)
 				);
 
 			} else {
-
-				$pp_start = date('Y-m-d', strtotime($row['pp_start']));
-				$pp_end = date('Y-m-d', strtotime($row['pp_end']));
 	
 				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
 				$params['bindParam'] = array(
@@ -62,12 +59,12 @@ function userPunchData($params)
 
 		foreach ($params['results'] as $row)
 		{
+
+			$pp_start = date('Y-m-d', strtotime($row['pp_start']));
+			$pp_end = date('Y-m-d', strtotime($row['pp_end']));
 			
 			if (isset($_GET['id']) && $_GET['id'])
 			{
-
-				$pp_start = date('Y-m-d', strtotime($row['pp_start']));
-				$pp_end = date('Y-m-d', strtotime($row['pp_end']));
 	
 				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
 				$params['bindParam'] = array(
@@ -75,9 +72,6 @@ function userPunchData($params)
 				);
 
 			} else {
-
-				$pp_start = date('Y-m-d', strtotime($row['pp_start']));
-				$pp_end = date('Y-m-d', strtotime($row['pp_end']));
 	
 				$params['dba']['s'] = "SELECT * FROM user_punch WHERE user_id = :user_id AND punch_day BETWEEN '$pp_start' AND '$pp_end'";
 				$params['bindParam'] = array(
